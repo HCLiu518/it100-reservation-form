@@ -1,11 +1,11 @@
 function checkEvent() {
   
-  var itCalendar = CalendarApp.getCalendarById('nthuit100@gmail.com');
+  var itCalendar = CalendarApp.getCalendarById('calendar-id');
   var startTime, endTime;
   var newEvent, oldEvent;
   
-  var resSheet = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1CCEq_t6oGEJXGmtvY8kaFua3KL3O7e5mt7VLNZ329LM/edit#gid=1787613458').getSheetByName('表單回應 1');
-  var autSheet = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1dZ4g3Wvb8INW1B8eDiFl3fYKg7Z2bHaUgAyCQtGOReA/edit#gid=0').getSheetByName('it100');
+  var resSheet = SpreadsheetApp.openByUrl('url').getSheetByName('sheet-name');
+  var autSheet = SpreadsheetApp.openByUrl('url').getSheetByName('sheet-name');
   var resRow = resSheet.getLastRow();
   var resEmail = resSheet.getSheetValues(resRow, 6, 1, 1)[0][0];
   var resStart = resSheet.getSheetValues(resRow, 3, 1, 1)[0][0];

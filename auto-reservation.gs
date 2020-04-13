@@ -1,8 +1,8 @@
 function checkEvent() {
   
   var itCalendar = CalendarApp.getCalendarById('calendar-id');
-  var startTime, endTime;
-  var newEvent, oldEvent;
+  var startTime, endTime, tempStartTime, tempEndTime;
+  var newEvent, oldEvent, presentEvents;
   
   var resSheet = SpreadsheetApp.openByUrl('url').getSheetByName('sheet-name');
   var autSheet = SpreadsheetApp.openByUrl('url').getSheetByName('sheet-name');
@@ -32,8 +32,13 @@ function checkEvent() {
   
   startTime = new Date(resStart);
   endTime = new Date(startTime.getTime()+3600000*resDuration);
+  tempStartTime = new Date(resStart + 1000);
+  tempEndTime = new Date(startTime.getTime()+3600000*resDuration - 1000);
+  presentEvents = itCalendar.getEvents(tempStartTime, tempEndTime);
   
-  if(findAut && (endTime > new Date()) && (itCalendar.getEvents(startTime, endTime).length == 0)){
+  if(findAut && (endTime > new Date())){
+    
+    if(presentEvents.length == 0 || presentEvents.length == 1 &&  presentEvents[0].getId() == autId)
     
     if(autId == ""){
       

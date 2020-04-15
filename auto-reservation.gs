@@ -28,8 +28,24 @@ function checkEvent() {
       break;
       
     }
+    
   }
   
+  if(autId != '' && resDuration == 0){
+      
+    oldEvent = itCalendar.getEventById(autId);
+    
+    if(oldEvent.getEndTime() > new Date()){
+      
+      oldEvent.deleteEvent();
+      autSheet.getRange(i, 2).setValue('');
+      
+    }
+    
+    return;
+      
+  }
+ 
   startTime = new Date(resStart);
   endTime = new Date(startTime.getTime()+3600000*resDuration);
   tempStartTime = new Date(resStart + 1000);
@@ -38,30 +54,33 @@ function checkEvent() {
   
   if(findAut && (endTime > new Date())){
     
-    if(presentEvents.length == 0 || presentEvents.length == 1 &&  presentEvents[0].getId() == autId)
+    if(presentEvents.length == 0 || presentEvents.length == 1 &&  presentEvents[0].getId() == autId){
     
-    if(autId == ""){
-      
-      newEvent = itCalendar.createEvent(resName, startTime, endTime);
-      autSheet.getRange(i, 2).setValue(newEvent.getId());
-      
-    } else {
-      
-      oldEvent = itCalendar.getEventById(autId);
-      
-      if(oldEvent.getEndTime() < new Date()){
+      if(autId == ""){
         
         newEvent = itCalendar.createEvent(resName, startTime, endTime);
-     
+        autSheet.getRange(i, 2).setValue(newEvent.getId());
+        
       } else {
-      
-        oldEvent.deleteEvent();
-        newEvent = itCalendar.createEvent(resName, startTime, endTime);
         
+        oldEvent = itCalendar.getEventById(autId);
+        
+        if(oldEvent.getEndTime() < new Date()){
+          
+          newEvent = itCalendar.createEvent(resName, startTime, endTime);
+          
+        } else {
+          
+          oldEvent.deleteEvent();
+          newEvent = itCalendar.createEvent(resName, startTime, endTime);
+          
+        }
+        
+        autSheet.getRange(i, 2).setValue(newEvent.getId());
       }
       
-      autSheet.getRange(i, 2).setValue(newEvent.getId());
-      
     }
+    
   }
+  
 }
